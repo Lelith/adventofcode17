@@ -1,16 +1,15 @@
 function calculateSum(){
   var input = document.getElementById('input').innerHTML;
-  var numbers =  input.split('');
+  var numbers =  input.split('').map(Number);
   var sum = 0;
+  var length = numbers.length;
+  var steps = length / 2;
 
-  numbers.forEach(function(number, index){
-    if(numbers[index+1]){
-      if (number == numbers[index+1]){
-        sum += parseInt(number);
-      }
-    } else if(number == numbers[0]){
-      sum += parseInt(number);
+  for (i = 0; i < steps; i++){
+    if (numbers[i] == numbers[i+steps]){
+      sum +=numbers[i];
     }
-  });
-  console.log("final result" + sum);
+  }
+  sum = sum * 2;
+  console.log("final result " + sum);
 }
