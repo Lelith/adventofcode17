@@ -1,6 +1,7 @@
 function calculateSum(){
-  var input = document.getElementById('input').innerHTML;
+  var input = document.querySelector('[data-type="input"]').innerHTML;
   var numbers =  input.split('').map(Number);
+  console.log(numbers);
   var sum = 0;
   var length = numbers.length;
   var steps = length / 2;
@@ -11,5 +12,5 @@ function calculateSum(){
     }
   }
   sum = sum * 2;
-  console.log("final result " + sum);
+  document.querySelector('[data-type="output"]').append(sum);
 }

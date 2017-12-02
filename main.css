@@ -1,0 +1,56 @@
+body {
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  background-color: #222;
+  color: #fff;
+  display: grid;
+  margin-top: 50px;
+  grid-template-columns: repeat(5, 1fr);
+  grid-column-gap: 20px;
+  grid-row-gap: 50px;
+  grid-template-areas:
+    ". btn out out ."
+    ".  in in in ."
+    ".  in in in .";
+}
+
+button {
+  grid-area: btn;
+  height: 30px;
+  border-radius: 0;
+  border: double 3px #fff;
+  background-color: #222;
+  color: #fff;
+  cursor: crosshair;
+  font-family: 'VT323', monospace;
+  font-size: 20px;
+  align-self: end;
+}
+
+button:hover {
+  text-shadow: 0 0 5px #fff;
+}
+
+h2 {
+  position: absolute;
+  top: -1.5em;
+  background-color: #222;
+  padding: 0 10px;
+}
+
+#output,
+#input {
+  word-break: break-all;
+  padding: 20px;
+  position: relative;
+}
+
+#output {
+  grid-area: out;
+  border: double 2px #009900;
+}
+
+#input {
+    grid-area: in;
+    border: dashed 5px #fff;
+}
