@@ -5,12 +5,13 @@ function calculateSum(){
 
   for (i = 0; i < rows.length; i++){
     passphrases = rows[i].split(' ');
-    console.log(passphrases);
-
-    for (j = 0; j< passphrases.length; j++ ){
-      if (passphrases.indexOf(passphrases[j], j + 1) > -1) {
-        sum --;
-        break;
+    for (j = 0; j < passphrases.length-1; j++ ){
+      for ( k = j+1; k <= passphrases.length-1; k++){
+        if(passphrases[j].split("").sort().join("") == passphrases[k].split("").sort().join("")) {
+          sum --;
+          j = passphrases.length;
+          break;
+        }
       }
     }
   }
