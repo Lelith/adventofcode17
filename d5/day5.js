@@ -4,10 +4,15 @@ function calculateSum(){
   var pointer = 0;
   var sum = 0;
   console.log(input);
+  
   while ((pointer < input.length) && (pointer >-1)) {
     offset = input[pointer];
     newPos = pointer + offset;
-    input[pointer] ++;
+    if ( offset >=3){
+      input[pointer] --;
+    } else {
+      input[pointer] ++;
+    }
     pointer = newPos;
     sum ++;
   }
