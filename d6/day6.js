@@ -1,59 +1,45 @@
 function calculateSum(){
   var input = document.querySelector('[data-type="input"]').innerHTML;
   var steps = 0;
-  var numbers = [input.split('\t').map(Number)];
-  var blocks = numbers[0].length;
+  var memoryBank = input.split('\t').map(Number);
+  var bankLength = memoryBank.length;
+  var combinations =[];
+  combinations[steps] = memoryBank.toString();
   var match = false;
-  console.log(numbers);
-  while(!match && steps < 5000) {
-    var load = Math.max.apply(null, numbers[steps])
-    var pointer = numbers[steps].indexOf(load);
+
+  while (!match && steps < 50){
     steps ++;
-    numbers[steps] = distribute(numbers[steps-1], load, pointer, blocks);
-    match = findMatch(numbers, steps);
+    var maxBlocks = Math.max.apply(null, memoryBank);
+    var pointer = memoryBank.indexOf(maxBlocks);
+
+    combinations[steps] =  distribute(memoryBank, bankLength, maxBlocks, pointer);
+    console.log(combinations);
+    match = findMatch(combinations, steps);
   }
 
-  console.log(numbers);
   document.querySelector('[data-type="output"]').append(steps);
 }
 
-function distribute(distribution, amount, pointer, blocks){
+function distribute(memoryBank, bankLength, maxBlocks, pointer){
   var currentPos = pointer;
-  var newBlocks = distribution.slice(0);
-  var distributionTime = (blocks-1);
-  var quantity = 0;
-  var leftover = 0;
-
-  if(amount < distributionTime ){
-    distributionTime = amount;
-    quantity = 1;
-  } else {
-    leftover = amount%distributionTime;
-    quantity = (amount - leftover) / distributionTime;
-  }
-
-  newBlocks[currentPos] = leftover;
-
-  for(i = 0; i < distributionTime; i++) {
-    currentPos++;
-
-    if(currentPos > (blocks-1)) {
+  memoryBank[pointer] = 0;
+  for (var i = maxBlocks; i >0 ; i--) {
+    currentPos ++;
+    if (currentPos > (bankLength-1)) {
       currentPos = 0;
     }
-
-    newBlocks[currentPos] += quantity;
+    memoryBank[currentPos]++;
   }
-  return newBlocks;
+  var combination = memoryBank.toString()
+  return combination;
 }
 
-function findMatch(numbers, steps){
-  newBlock = numbers[steps]
-  for (i = 0; i < steps-1; i++) {
-    current = numbers[i];
-    for(j = 0; j < newBlock.length && newBlock[j] === current[j]; ++j){
-      if(j === newBlock.length){
-        return true;
-      }
+function findMatch(combinations, steps){
+  var latestCombination = combinations[steps];
+  for (var i = 0; i < steps; i++) {
+    console.log("matching: "+latestCombination +" : "+ combinations[i].toString());
+    if(latestCombination === combinations[i].toString()){
+      return true;
     }
   }
   return false;
