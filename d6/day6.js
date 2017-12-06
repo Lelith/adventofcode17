@@ -4,49 +4,57 @@ function calculateSum(){
   var numbers = [input.split('\t').map(Number)];
   var blocks = numbers[0].length;
   var match = false;
-
-  while(!match && steps < 10) {
+  console.log(numbers);
+  while(!match && steps < 5000) {
     var load = Math.max.apply(null, numbers[steps])
     var pointer = numbers[steps].indexOf(load);
     steps ++;
     numbers[steps] = distribute(numbers[steps-1], load, pointer, blocks);
     match = findMatch(numbers, steps);
   }
+
   console.log(numbers);
   document.querySelector('[data-type="output"]').append(steps);
 }
 
-function distribute(distribution, load, pointer, blocks){
-  var leftover = load % (blocks-1);
-  var quantity = (load - leftover) / (blocks-1);
+function distribute(distribution, amount, pointer, blocks){
   var currentPos = pointer;
-  var newBlocks = [];
+  var newBlocks = distribution.slice(0);
+  var distributionTime = (blocks-1);
+  var quantity = 0;
+  var leftover = 0;
+
+  if(amount < distributionTime ){
+    distributionTime = amount;
+    quantity = 1;
+  } else {
+    leftover = amount%distributionTime;
+    quantity = (amount - leftover) / distributionTime;
+  }
 
   newBlocks[currentPos] = leftover;
-  for(i = 1; i < blocks; i++) {
+
+  for(i = 0; i < distributionTime; i++) {
     currentPos++;
 
     if(currentPos > (blocks-1)) {
       currentPos = 0;
     }
 
-    newBlocks[currentPos] = distribution[currentPos]+quantity;
+    newBlocks[currentPos] += quantity;
   }
   return newBlocks;
 }
 
 function findMatch(numbers, steps){
-  console.log("findMatch");
-  console.log(numbers.length);
-  console.log("---------------");
-  for (i = 0; i < numbers.length-1; i++) {
-      console.log("test: "+ numbers[steps].toString() +" equals "+numbers[i].toString());
-      if(numbers[steps].toString() === numbers[i].toString()){
-        console.log("!!!!---------------!!!");
-        console.log("maaatch");
-        console.log("!!!!---------------!!!");
+  newBlock = numbers[steps]
+  for (i = 0; i < steps-1; i++) {
+    current = numbers[i];
+    for(j = 0; j < newBlock.length && newBlock[j] === current[j]; ++j){
+      if(j === newBlock.length){
         return true;
       }
     }
+  }
   return false;
 }
