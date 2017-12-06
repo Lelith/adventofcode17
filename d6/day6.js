@@ -7,7 +7,8 @@ function calculateSum(){
   combinations[steps] = memoryBank.toString();
   var match = false;
 
-  while (!match && steps < 5000){
+  console.log("calculating hang on...");
+  while (!match){
     steps ++;
     var maxBlocks = Math.max.apply(null, memoryBank);
     var pointer = memoryBank.indexOf(maxBlocks);
@@ -15,6 +16,8 @@ function calculateSum(){
     combinations[steps] =  distribute(memoryBank, bankLength, maxBlocks, pointer);;
     match = findMatch(combinations, steps);
   }
+  console.log("------------");
+  console.log(steps);
   document.querySelector('[data-type="output"]').append(steps);
 }
 
