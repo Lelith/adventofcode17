@@ -5,10 +5,10 @@ function calculateSum(){
   var bankLength = memoryBank.length;
   var combinations =[];
   combinations[steps] = memoryBank.toString();
-  var match = false;
+  var match = -1;
 
   console.log("calculating hang on...");
-  while (!match){
+  while (match < 0){
     steps ++;
     var maxBlocks = Math.max.apply(null, memoryBank);
     var pointer = memoryBank.indexOf(maxBlocks);
@@ -16,9 +16,10 @@ function calculateSum(){
     combinations[steps] =  distribute(memoryBank, bankLength, maxBlocks, pointer);;
     match = findMatch(combinations, steps);
   }
+  var cycles = steps - match;
   console.log("------------");
   console.log(steps);
-  document.querySelector('[data-type="output"]').append(steps);
+  document.querySelector('[data-type="output"]').append(cycles);
 }
 
 function distribute(memoryBank, bankLength, maxBlocks, pointer){
@@ -39,8 +40,8 @@ function findMatch(combinations, steps){
   var latestCombination = combinations[steps];
   for (var i = 0; i < steps; i++) {
     if(latestCombination === combinations[i].toString()){
-      return true;
+      return i;
     }
   }
-  return false;
+  return -1;
 }
