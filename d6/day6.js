@@ -7,16 +7,14 @@ function calculateSum(){
   combinations[steps] = memoryBank.toString();
   var match = false;
 
-  while (!match && steps < 50){
+  while (!match && steps < 5000){
     steps ++;
     var maxBlocks = Math.max.apply(null, memoryBank);
     var pointer = memoryBank.indexOf(maxBlocks);
 
-    combinations[steps] =  distribute(memoryBank, bankLength, maxBlocks, pointer);
-    console.log(combinations);
+    combinations[steps] =  distribute(memoryBank, bankLength, maxBlocks, pointer);;
     match = findMatch(combinations, steps);
   }
-
   document.querySelector('[data-type="output"]').append(steps);
 }
 
@@ -37,7 +35,6 @@ function distribute(memoryBank, bankLength, maxBlocks, pointer){
 function findMatch(combinations, steps){
   var latestCombination = combinations[steps];
   for (var i = 0; i < steps; i++) {
-    console.log("matching: "+latestCombination +" : "+ combinations[i].toString());
     if(latestCombination === combinations[i].toString()){
       return true;
     }
